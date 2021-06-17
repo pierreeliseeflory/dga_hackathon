@@ -1,0 +1,13 @@
+version: '3'
+networks: 
+    dga_environment:
+        ipam:
+            config:
+                - subnet: 10.0.0.0/24
+
+services:
+    secure-dns:
+        image: dns-dga
+
+    victim-dga:
+        image: victim-dga
