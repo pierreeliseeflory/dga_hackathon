@@ -17,6 +17,10 @@
 docker-compose up
 ```
 
+### Access visualization
+
+Go to the [skydive UI](http://localhost:8082/ui/topology).
+
 ### Generate domains
 
 ```shell
