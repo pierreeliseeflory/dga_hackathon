@@ -33,3 +33,32 @@ python3 dgacollection/DGA.py
 The attacking DNS (10.0.0.251) registers randomly one of the 100 first domains generated for the C2-server (10.0.0.250). When the victim (10.0.0.3) queries the local DNS (10.0.0.3) (who only knows the location of the victim domain), the query is passed to other DNS (including the attacker's one).
 
 That way the victim (in fact the malware) when spraying DNS request will receive NXDOMAIN for most urls except for the one registered by the attacker. In our PoC, we consider that the single fact that the response is not a NXDOMAIN is enough to assess that the malware has successfully connected to the c2-server.
+
+### Without DGAme-over
+
+#### DNS owned by the attacker
+
+![a](pictures/attackers_dns_no_protection.png)
+
+#### Local victim's DNS
+
+![b](pictures/local_dns_no_protection.png)
+
+#### DGA output from the malware on the victim's machine
+
+![c](pictures/victim_no_protection.png)
+
+
+### With DGAme-over
+
+#### DNS owned by the attacker
+
+![a](pictures/attackers_dns.png)
+
+#### Local victim's DNS
+
+![b](pictures/local_dns.png)
+
+#### DGA output from the malware on the victim's machine
+
+![c](pictures/victim.png)
