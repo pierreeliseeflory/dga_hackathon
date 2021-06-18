@@ -13,7 +13,7 @@ RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9
 COPY named.conf /etc/bind/
 COPY named.conf.options /etc/bind/
 COPY named.conf.local /etc/bind/
-# COPY named.conf.log /etc/bind/
+COPY dgame_over.sh /dgame_over.sh
 
 COPY db.victim-domain.com /etc/bind/zones/
 

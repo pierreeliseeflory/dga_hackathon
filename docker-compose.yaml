@@ -18,7 +18,7 @@ services:
         command: >
             bash -c "/etc/init.d/bind9 start 
             && rndc querylog on
-            && tail -F /var/log/named/query.log"
+            && /dgame_over.sh"
 
     attacker-dns:
         image: attacker-dns
