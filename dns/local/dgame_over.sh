@@ -40,13 +40,13 @@ while true; do
     new_requests=$(wc -l /var/log/named/query.log | cut -d' ' -f 1)
     new_requests=$(( new_requests - request ))
 
-    # if [ $new_requests -ge 10 ]
-    # then
-    #     victim=$( tail -n 1 /var/log/named/query.log | cut -d' ' -f 3 | cut -d# -f 1)
-    #     echo "DGA usage detected on ${victim}"
-    #     block_victim "${victim}"
-    #     break
-    # fi
+    if [ $new_requests -ge 4 ]
+    then
+        victim=$( tail -n 1 /var/log/named/query.log | cut -d' ' -f 3 | cut -d# -f 1)
+        echo "DGA usage detected on ${victim}"
+        block_victim "${victim}"
+        break
+    fi
 done
 
 while true; do

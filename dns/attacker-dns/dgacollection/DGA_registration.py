@@ -8,7 +8,7 @@ import time
 domains = (Cryptolocker.domains())
 number_domains_generated = (len(Cryptolocker.domains()))
 
-number_domains_poc = 30
+number_domains_poc = 20
 
 random_value = random.randrange(number_domains_poc)
 
@@ -18,7 +18,7 @@ def change_domain(domain):
     with open("/domain", 'a') as a_writer:
         a_writer.write(domain)
 
-print("The new 2 server is at : " + malicious_server)
+print("The new C2 server is at : " + malicious_server)
 
 change_domain(malicious_server)
 

@@ -14,7 +14,7 @@ print("Malware waking up")
 domains = (Cryptolocker.domains())
 number_domains_generated = (len(Cryptolocker.domains()))
 
-number_domains_poc = 30
+number_domains_poc = 20
 
 def get(domain):
     url = 'https://' + domain
