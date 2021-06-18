@@ -14,6 +14,8 @@ print("Malware waking up")
 domains = (Cryptolocker.domains())
 number_domains_generated = (len(Cryptolocker.domains()))
 
+number_domains_poc = 30
+
 def get(domain):
     url = 'https://' + domain
     try:
@@ -28,14 +30,11 @@ def get(domain):
         if (code == -3): 
             print("NXDOMAIN for " + domain)
         else :
-            print("Received response from c2-server")
+            print("Received response from c2-server (" + domain + ")")
 
-for domain in range (1) :
+for domain in range (number_domains_poc) :
     dga_domain = domains[domain]
     get(dga_domain)
-
-malicious_server = 'c2-server.com'
-get(malicious_server)
 
 while True:
     time.sleep(10)

@@ -8,7 +8,9 @@ import time
 domains = (Cryptolocker.domains())
 number_domains_generated = (len(Cryptolocker.domains()))
 
-random_value = random.randrange(100)
+number_domains_poc = 30
+
+random_value = random.randrange(number_domains_poc)
 
 malicious_server = domains[random_value]
 
