@@ -1,0 +1,109 @@
+version: '3'
+networks: 
+    dga_environment:
+        ipam:
+            config:
+                - subnet: 10.0.0.0/24
+                #   gateway: 10.0.0.1
+    skynet:
+
+services:
+    local-dns:
+        image: local-dns
+        hostname: local-dns
+        container_name: local-dns
+        networks: 
+            dga_environment:
+                ipv4_address: 10.0.0.2
+        command: >
+            bash -c "/etc/init.d/bind9 start 
+            && rndc querylog on
+            && tail -F /var/log/named/query.log"
+
+    attacker-dns:
+        image: attacker-dns
+        hostname: attacker-dns
+        container_name: attacker-dns
+        networks: 
+            dga_environment:
+                ipv4_address: 10.0.0.251
+        command: >
+            bash -c "/etc/init.d/bind9 start 
+            && /update_dns.sh &
+            cd /malware
+            && PYTHONPATH=. python3 -u dgacollection/DGA_registration.py"
+
+    victim:
+        image: victim
+        hostname: attacker-dns
+        container_name: victim
+        networks: 
+            dga_environment:
+                ipv4_address: 10.0.0.3
+        command: >
+            bash -c "tail -F /dev/null &
+            cd /malware
+            && PYTHONPATH=. python3 -u dgacollection/DGA.py"
+        dns:
+            - 10.0.0.2
+
+    C2-server:
+        image: c2-server
+        hostname: attacker-dns
+        container_name: c2-server
+        networks: 
+            dga_environment:
+                ipv4_address: 10.0.0.250
+        command: python3 /server/c2-server.py
+        dns:
+            - 10.0.0.251
+
+
+    elasticsearch:
+        image: elasticsearch:5
+        container_name: elasticsearch
+        ports:
+          - "19200:9200"
+          - "19300:9300"
+        environment:
+          - "discovery.type=single-node"
+        networks:
+          - skynet
+    
+    skydive-analyzer:
+        image: skydive/skydive
+        container_name: skydive-analyzer
+
+        ports:
+            - "8082:8082"
+            - "8082:8082/udp"
+        links:
+            - elasticsearch
+        command: analyzer --listen=0.0.0.0:8082
+        environment:
+            - SKYDIVE_STORAGE_ELASTICSEARCH_HOST=elasticsearch:9200
+            - SKYDIVE_ANALYZER_STORAGE_BACKEND=elasticsearch
+            - SKYDIVE_GRAPH_BACKEND=elasticsearch
+            - SKYDIVE_ETCD_LISTEN=0.0.0.0:12379
+        networks:
+            - skynet
+
+    skydive-agent:
+        image: skydive/skydive
+        container_name: skydive-agent
+        depends_on:
+            - skydive-analyzer
+        ports:
+            - "8081:8081"
+        network_mode: "host"
+        pid: "host"
+        command: agent --listen=0.0.0.0:8081
+        privileged: true
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /var/run/netns:/host/run
+            - /var/run/openvswitch/db.sock:/var/run/openvswitch/db.sock
+        environment:
+            - SKYDIVE_AGENT_TOPOLOGY_NETNS_RUN_PATH=/host/run
+            - SKYDIVE_ANALYZERS=127.0.0.1:8082
+            

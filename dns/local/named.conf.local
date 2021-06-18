@@ -1,0 +1,13 @@
+zone "victim-domain.com" {
+    type master;
+    file "/etc/bind/zones/db.victim-domain.com";
+};
+
+logging {
+    channel query.log {
+        file "/var/log/named/query.log";
+        // Set the severity to dynamic to see all the debug messages.
+        severity dynamic;
+    };
+    category queries { query.log; };
+};

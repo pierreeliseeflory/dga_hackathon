@@ -1,0 +1,4 @@
+zone "c2-server.com" {
+    type master;
+    file "/etc/bind/zones/db.c2-server.com";
+};
