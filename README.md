@@ -33,8 +33,8 @@ python3 dgacollection/DGA.py
 * Custom Network (dga_environment): 10.0.0.0/24
   * DNS victim (serving victim-domain.com): 10.0.0.2
   * victim machines (running the DGA): 10.0.0.3
-  * DNS attackers : 10.0.0.0.251
-  * C2-server (?????????.???): 10.0.0.0.250
+  * DNS attackers : 10.0.0.251
+  * C2-server (?????????.???): 10.0.0.250
 
 ## Explanations
 
