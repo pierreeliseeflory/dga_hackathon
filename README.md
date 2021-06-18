@@ -1,4 +1,4 @@
-# Tool to fight the use of Domain Generating Algorithms
+# DGAme-Over: fighting malware easily
 
 ## Usage
 
