@@ -17,6 +17,7 @@ services:
         command: >
             bash -c "/etc/init.d/bind9 start 
             && rndc querylog on
+            && : > /var/log/named/query.log
             && tail -F /var/log/named/query.log
             & /dgame_over.sh"
 
@@ -28,9 +29,7 @@ services:
             dga_environment:
                 ipv4_address: 10.0.0.251
         command: >
-            bash -c "/etc/init.d/bind9 start 
-            && /update_dns.sh &
-            cd /malware
+            bash -c "cd /malware
             && PYTHONPATH=. python3 -u dgacollection/DGA_registration.py"
 
     victim:
