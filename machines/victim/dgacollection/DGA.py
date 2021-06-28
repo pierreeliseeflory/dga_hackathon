@@ -19,7 +19,7 @@ number_domains_generated = (len(Cryptolocker.domains()))
 
 # Limiting sizes for demonstration
 # in reality 500-50000 /day (Conficker)
-number_domains_poc = 20
+number_domains_poc = 10
 
 def get(domain):
     """Makes HTTP request to urls auto-generated
@@ -40,7 +40,7 @@ def get(domain):
         if code_search:
     	    code = int(code_search.group(1))
         # errno == -3 -> NXDOMAIN
-        if (code == -3): 
+        if (code == -3 or code == -2): 
             print("NXDOMAIN for " + domain)
         # errno != 3 -> the domain has been resolved
         # this is the C2-server
@@ -50,6 +50,7 @@ def get(domain):
 for domain in range (number_domains_poc) :
     dga_domain = domains[domain]
     get(dga_domain)
+    time.sleep(1)
 
 # keep the container alive
 while True:
