@@ -19,7 +19,5 @@ COPY db.victim-domain.com /etc/bind/zones/
 
 RUN mkdir -p /var/log/named \
   && touch /var/log/named/query.log \
-  && chown -R bind /var/log/named/ \
-  && : > /var/log/named/query.log
-
-RUN /etc/init.d/bind9 restart
+  && touch /var/log/named/named.stats \
+  && chown -R bind /var/log/named/
