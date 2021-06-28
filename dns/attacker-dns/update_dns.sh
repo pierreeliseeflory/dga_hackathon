@@ -1,8 +1,6 @@
 #! /bin/bash
 
-sleep 1
-
-c2server=$( tail -n 1 /domain )
+c2server=$1
 
 # Save stdout
 exec 5>&1
@@ -39,6 +37,6 @@ echo "${c2server}.        IN      A      10.0.0.250"
 # Re-establish stdout
 exec 1>&5
 
-/etc/init.d/bind9 restart
+/etc/init.d/bind9 start
 
 echo "New domain name registered"
