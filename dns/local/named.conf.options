@@ -10,4 +10,7 @@ options {
     };
 
     querylog yes;
+
+    zone-statistics yes ;
+    statistics-file "/var/log/named/named.stats";
 };
