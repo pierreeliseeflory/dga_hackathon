@@ -76,3 +76,7 @@ That way the victim (in fact the malware) when spraying DNS request will receive
 #### DGA output from the malware on the victim's machine
 
 ![c](pictures/victim.png)
+
+## Prize
+
+This project won the technical and public prize of the cybersecurity Hackathon organized by Ecole 42 and Thales (https://ushallnotpass.org/).
